@@ -1,5 +1,12 @@
 from flask import Flask, render_template
-from werkzeug.utils import quote
+
+try:
+    from werkzeug.urls import url_quote as quote  # Werkzeug <2.0
+except ImportError:
+    try:
+        from werkzeug.utils import quote  # Werkzeug 2.0.x
+    except ImportError:
+        from urllib.parse import quote  # Fallback to stdlib
 
 app = Flask(__name__)
 
